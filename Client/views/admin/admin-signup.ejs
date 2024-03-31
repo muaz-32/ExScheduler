@@ -1,0 +1,50 @@
+<div class="outer">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-lg-4 col-md-7 offset-lg-4 offset-md-3">
+                <div class="panel border bg-white">
+                    <div class="panel-heading">
+                        <h3 class="pt-3 font-weight-bold">Admin Signup</h3>
+                    </div>
+                    <div class="panel-body p-3">
+                        <form [formGroup]="adminsignupForm">
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="adminsignupForm.controls['name'].dirty && adminsignupForm.hasError('required','name')">
+                                    <span class="fa fa-user p-2"></span>
+                                    <input formControlName="name" type="text" placeholder="Name">
+                                </div>
+                            </div>
+                            <small *ngIf="adminsignupForm.controls['name'].dirty && adminsignupForm.hasError('required','name')" class="text-danger">"Name is required"</small>
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="adminsignupForm.controls['email'].dirty && adminsignupForm.hasError('required','email')">
+                                    <span class="fa fa-envelope p-2"></span>
+                                    <input formControlName="email" type="email" placeholder="Email">
+                                </div>
+                                <small *ngIf="adminsignupForm.controls['email'].hasError('email')" class="text-danger">Invalid email format</small>
+                            </div>
+                            <small *ngIf="adminsignupForm.controls['email'].dirty && adminsignupForm.hasError('required','email')" class="text-danger">"Email is required"</small>
+                            <div class="form-group pt-3">
+                                <div class="input-field" [class.error]="adminsignupForm.controls['password'].dirty && adminsignupForm.hasError('required','password')">
+                                    <span class="fa fa-lock p-2"></span>
+                                    <input formControlName="password" [type]="type" placeholder="Password">
+                                    <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
+                                </div>
+                            </div>
+                            <small *ngIf="adminsignupForm.controls['password'].dirty && adminsignupForm.hasError('required','password')" class="text-danger">"Password is required"</small>
+                            
+                            <small *ngIf="adminsignupForm.controls['password'].dirty && adminsignupForm.controls['password'].hasError('length')" class="text-danger">"Password must be at least 8 characters long"</small>
+                            <small *ngIf="adminsignupForm.controls['password'].dirty && adminsignupForm.controls['password'].hasError('case')" class="text-danger">"Password should include both upper and lower case letters"</small>
+                            <small *ngIf="adminsignupForm.controls['password'].dirty && adminsignupForm.controls['password'].hasError('special')" class="text-danger">"Password should include a special character"</small>
+                            <small *ngIf="adminsignupForm.controls['password'].dirty && adminsignupForm.controls['password'].hasError('number')" class="text-danger">"Password should include at least one number"</small>
+                            <small *ngIf="adminsignupForm.controls['password'].dirty && adminsignupForm.controls['password'].hasError('alphanumeric')" class="text-danger">"Password should include at least one alphanumeric character"</small>
+                            <div class="form-inline fr mt-4">
+                            </div>
+                            <button (click)="onSignup()" type="submit" class="btn btn-primary btn-block mt-4 w-100">Signup</button>
+                            <div class="text-center pt-4 text-muted">Already have an account? <a id="forget" routerLink="/admin-login">Login</a></div>
+                        </form>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

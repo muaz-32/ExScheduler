@@ -1,0 +1,147 @@
+<style>
+    .navbar-dark .navbar-nav .nav-link {
+        color: #ffffff;
+    }
+    .green-letter {
+        color: rgb(228, 96, 44);
+        font-size: xx-large;
+    }    
+    .metro-text {
+        color: #dddddd;
+    }
+    .navbar {
+        background-color: #142246d5;
+    }
+    .navbar-nav .nav-item.active {
+        margin-left: 90px;
+    }
+    .modal-header-warning {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #f0ad4e;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+    }
+    .modal-header-success {
+    color: #fff;
+    padding: 9px 15px;
+    border-bottom: 1px solid #eee;
+    background-color: #28a745;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    }
+    .nav-link {
+    margin-right: 15px; /* Add spacing to the right of each link */
+}
+
+
+</style>
+
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/">
+        <span class="green-letter">Ex</span><span class="metro-text">Scheduler</span>
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            
+            <a class="nav-link" href="/getvalidatecr">Validate CR<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/admindashboard">Dashboard<span class="sr-only"></span></a>
+    </ul>
+</div>
+
+    
+    <div class="navbar-nav">
+        <a class="nav-link" href="/userlogout"> Log Out <i class="fas fa-user"></i></a>
+    </div>  
+</nav>
+
+
+
+<% if (typeof error !== 'undefined') {
+    error.forEach((error) => { %>
+
+        <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-warning">
+                        <h1><i class="glyphicon glyphicon-thumbs-up"></i>Warning!</h1>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <%= error.info %>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#warning').modal('show');
+                setTimeout(function () {
+                    $('#warning').modal('hide');
+                }, 3000);
+            });
+        </script>        
+    <% });
+    delete error;
+} %>
+
+<% if (typeof no_err !== 'undefined') {
+    no_err.forEach((no_err) => { %>
+        <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modal-header-success">
+                        <h1><i class="glyphicon glyphicon-thumbs-up"></i> Success!</h1>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <%= no_err.message %>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        
+        <script>
+            $(document).ready(function () {
+                $('#success').modal('show');
+                setTimeout(function () {
+                    $('#success').modal('hide');
+                }, 3000);
+            });
+        </script>
+            
+        
+    <% });
+    delete no_err;
+} %>
+
+
+
+
+
+
+

@@ -1,0 +1,180 @@
+
+<!-- SIDEBAR -->
+<section id="sidebar" >
+    <a href="#" class="brand">
+      <span class="text">Ex-scheduler</span>
+    </a>
+    <ul class="side-menu top">
+      <li class="active">
+        <a href="/admin/admindashboard">
+          
+          <span class="text">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/add-department">
+          
+          <span class="text">Add Department</span>
+        </a>
+      </li>
+      <li>
+        <a href="/add-program-semester">
+          
+          <span class="text">Add ProgramSemester</span>
+        </a>
+      </li>
+      <li>
+        <a href="/add-exam-schedule">
+          
+          <span class="text">Add ExamSchedule</span>
+        </a>
+      </li>
+      <li>
+        <a href="/add-course">
+          
+          <span class="text">Add Course</span>
+        </a>
+      </li>
+      <li>
+        <a href="/add-link">
+          
+          <span class="text">Add Link</span>
+        </a>
+      </li>
+      <li>
+        <a href="/generate-routine">
+          
+          <span class="text">Generate Routine</span>
+        </a>
+      </li>
+      <li>
+        <a href="/fetch-routine">
+          
+          <span class="text">Fetch Routine</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="side-menu">
+      <li>
+        <a href="/userlogout" class="logout">
+          
+          <span class="text">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+  <!-- SIDEBAR -->
+
+  <section id="content">
+    <style>
+      .navbar-dark .navbar-nav .nav-link {
+          color: #ffffff;
+      }
+      .green-letter {
+          color: rgb(228, 96, 44);
+          font-size: xx-large;
+      }    
+      .metro-text {
+          color: #dddddd;
+      }
+      .navbar {
+          background-color: #142246d5;
+      }
+      .navbar-nav .nav-item.active {
+          margin-left: 0px;
+      }
+      .modal-header-warning {
+    color:#fff;
+      padding:9px 15px;
+      border-bottom:1px solid #eee;
+      background-color: #f0ad4e;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+       border-top-left-radius: 5px;
+       border-top-right-radius: 5px;
+      }
+      .modal-header-success {
+      color: #fff;
+      padding: 9px 15px;
+      border-bottom: 1px solid #eee;
+      background-color: #28a745;
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+      -moz-border-radius-topleft: 5px;
+      -moz-border-radius-topright: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      }
+  </style>
+  
+  
+  
+  
+  <% if (typeof error !== 'undefined') {
+      error.forEach((error) => { %>
+  
+          <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header modal-header-warning">
+                          <h1><i class="glyphicon glyphicon-thumbs-up"></i>Warning!</h1>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      </div>
+                      <div class="modal-body">
+                          <%= error.message %>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                      </div>
+                  </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+          </div>
+          <script>
+              $(document).ready(function () {
+                  $('#warning').modal('show');
+                  setTimeout(function () {
+                      $('#warning').modal('hide');
+                  }, 3000);
+              });
+          </script>        
+      <% });
+      delete error;
+  } %>
+  
+  <% if (typeof no_err !== 'undefined') {
+      no_err.forEach((no_err) => { %>
+          <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header modal-header-success">
+                          <h1><i class="glyphicon glyphicon-thumbs-up"></i> Success!</h1>
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                      </div>
+                      <div class="modal-body">
+                          <%= no_err.message %>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+  
+                      </div>
+                  </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+          </div>
+          
+          <script>
+              $(document).ready(function () {
+                  $('#success').modal('show');
+                  setTimeout(function () {
+                      $('#success').modal('hide');
+                  }, 3000);
+              });
+          </script>
+              
+          
+      <% });
+      delete no_err;
+  } %>
+  
+

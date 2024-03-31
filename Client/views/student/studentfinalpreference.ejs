@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Student Dashboard</title>
+    <%-include('../partials/header') %>
+</head>
+
+<body>
+    <section class="vh-200" style="background-image: url('../img/1.jpg'); background-color: #20315e; margin-top: -50px; background-size: cover; background-position: center;">
+        <%-include('../partials/navstudent') %>
+
+        <form action="/student/submitfinalpreference" method="post" style="padding-top: 200px;">
+            <% for (const course of courses) { %>
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <% if (course.examDate !== null) { %>
+                                <div class="mt-5 card">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= course.courseName %></h5>
+                                        <input type="text" class="form-control" name="courses" 
+                                        value="<%= course.examDate %>" readonly disabled>
+                                    </div>
+                                </div>
+                            <% } else { %>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= course.courseName %></h5>
+                                        <input type="hidden" class="form-control" name="courses" value="<%= course.courseName %>" readonly>
+                                        <!-- <input type="text" class="form-control" name="dates" value="<%= course.examDate %>"> -->
+                                    
+                                        <select class="form-control" name="dates" required>
+                                            <option value="" selected disabled>Select a Date</option>
+                                            <% for (const date of availableDates) { %>
+                                                <option value="<%= date %>"><%= date %></option>
+                                            <% } %>
+                                        </select>
+                                    
+                                    </div>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <br><br>
+        </form>
+
+    </section>
+
+    <%-include('../partials/footer') %>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="

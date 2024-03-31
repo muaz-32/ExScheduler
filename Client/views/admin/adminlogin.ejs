@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Login</title>
+  <%-include('../partials/header') %>
+  <style>
+    .modal-header-warning {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #f0ad4e;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <% if (messages.error) { %>
+    <div class="modal fade show" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-warning">
+                    <h5 class="modal-title" id="errorModalLabel">Sorry!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <%= messages.error %>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+                $('#errorModal').modal('show');
+                setTimeout(function () {
+                    $('#errorModal').modal('hide');
+                }, 3000);
+            });
+    </script>
+    <% delete messages.error; %>
+<% } %>
+
+
+
+
+    
+<div>
+  <section class="vh-200" style="background-image: url('../img/1.jpg'); background-color: #20315e; margin-top: -50px; background-size: cover; background-position: center;">
+
+    <%-include('../partials/nav') %>
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="mt-5 card" style="border-radius: 1rem;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img src="../img/9.jpg" alt="login form" class="img-fluid h-100" style="border-radius: 1rem 0 0 1rem;" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+
+                  <!-- Rest of the form code -->
+                  <form action="/admin/adminlogin" method="post">
+
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <i class="fas fa-clock fa-2x me-3" style="color: #ff6219;"></i>
+                      <span class="h1 fw-bold mb-0">ExScheduler</span>
+
+                    </div>
+
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="email">Email address</label>
+                      <input type="text" class="form-control form-control-lg" maxlength="50" id="adminemail" name="adminemail"
+                        aria-describedby="emailHelp" required/>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="password">Password</label>
+                      <input type="password" maxlength="23" class="form-control form-control-lg" id="adminpassword" name="adminpassword" required>
+                    </div>
+
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                    </div>
+                  </form>
+                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="/admin/adminsignup"
+                    style="color: #393f81;">Sign up here</a></p>
+                  <p class="mb-5 pb-lg-2" style="color: #393f81;">Are you a student? <a href="/student/studentlogin"
+                      style="color: #393f81;">Click Here</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+      
+
+
+    <%-include('../partials/footer') %>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

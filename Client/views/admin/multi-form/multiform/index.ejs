@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <title>Registraion Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11"></link>
+    <style>
+      :root {
+        --primary-color: rgb(11, 78, 179);
+      }
+      
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: Montserrat, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+      }
+      /* Global Stylings */
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      
+      input {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 0rem;
+      }
+
+      select{
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 0rem;
+      }
+      
+      .width-50 {
+        width: 50%;
+      }
+      
+      .ml-auto {
+        margin-left: auto;
+      }
+      
+      .text-center {
+        text-align: center;
+      }
+      
+      /* Progressbar */
+      .progressbar {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        counter-reset: step;
+        margin: 2rem 0 4rem;
+      }
+      
+      .progressbar::before,
+      .progress {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 4px;
+        width: 100%;
+        background-color: #dcdcdc;
+        z-index: -1;
+      }
+      
+      .progress {
+        background-color: var(--primary-color);
+        width: 0%;
+        transition: 0.3s;
+      }
+      
+      .progress-step {
+        width: 2.1875rem;
+        height: 2.1875rem;
+        background-color: #dcdcdc;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .progress-step::before {
+        counter-increment: step;
+        content: counter(step);
+      }
+      
+      .progress-step::after {
+        content: attr(data-title);
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        font-size: 0.85rem;
+        color: #666;
+      }
+      
+      .progress-step-active {
+        background-color: var(--primary-color);
+        color: #f3f3f3;
+      }
+      
+      /* Form */
+      .form {
+        width: clamp(800px, 30%, 430px);
+        margin: 0 auto;
+        border: 1px solid #ccc;
+        border-radius: 0rem;
+        padding: 1.5rem;
+      }
+      
+      .form-step {
+        display: none;
+        transform-origin: top;
+        animation: animate 0.5s;
+      }
+      
+      .form-step-active {
+        display: block;
+      }
+      
+      .input-group {
+        margin: 2rem 0;
+      }
+      
+      @keyframes animate {
+        from {
+          transform: scale(1, 0);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1, 1);
+          opacity: 1;
+        }
+      }
+      
+      /* Button */
+      .btns-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .btns-group-margin {
+        margin-bottom: 20px; /* Adjust the vertical distance */
+      }
+      
+      .btn {
+        padding: 0.75rem;
+        display: block;
+        text-decoration: none;
+        background-color: var(--primary-color);
+        color: #f3f3f3;
+        text-align: center;
+        border-radius: 0rem;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--primary-color);
+      }
+
+      /* New Red Button Style */
+    .red-btn {
+        width: 150px; /* Adjust width */
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        background-color: red; /* Change to your preferred red color */
+        color: #f3f3f3;
+        text-align: center;
+        border-radius: 0rem;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      
+      .red-btn:hover {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 3px red; /* Change to your preferred red color */
+      }
+
+
+      .big-btn {
+        padding: 0.75rem;
+        display: block;
+        text-decoration: none;
+        background-color: red;
+        color: #f3f3f3;
+        text-align: center;
+        border-radius: 0rem;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      
+      .big-btn:hover {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--primary-color);
+      }
+
+
+      .centered-div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      
+    </style>
+    
+  </head>
+  <body>
+    
+    <form action="#" class="form">
+      <h1 class="text-center">Registration Form</h1>
+      <!-- Progress bar -->
+      <div class="progressbar">
+        <div class="progress" id="progress"></div>
+        
+        <div class="progress-step progress-step-active" data-title="Depertment"></div>
+        <div class="progress-step" data-title="ProgramSemester"></div>
+        <div class="progress-step" data-title="Course"></div>
+        <div class="progress-step" data-title="Link"></div>
+        <div class="progress-step" data-title="ExamSchedule"></div>
+        <div class="progress-step" data-title="CR Preference"></div>
+        <div class="progress-step" data-title="Routine"></div>
+
+      </div>
+
+      <!-- Steps -->
+      <div class="form-step form-step-active">
+        <div class="input-group">
+          <label for="department">Department</label>
+          <input type="text" name="department" id="department" />
+        </div>
+        
+      
+        <div class="btns-group">
+            <a href="#" id="departmentSubmit" class="red-btn submit">Submit</a>
+        </div>
+        <br>
+      
+        <div class="">
+          <a href="#" class="btn btn-next width-50 ml-auto">Next</a>
+        </div>
+        <br>
+        <iframe id="departmentIframe" src="/admin/deptTable" width="100%" height="300px"></iframe>
+      </div>
+      <div class="form-step">
+        <div class="input-group">
+          <label for="department">Department</label>
+          <select id="departmentDropdown"></select>
+        </div>
+        <div class="input-group">
+          <label for="programsemester">ProgramSemester</label>
+          <input type="text" name="programsemester" id="programsemester" />
+        </div>
+
+        <div class="btns-group btns-group-margin">
+            <a href="#" id="programSemesterSubmit" class="red-btn submit">Submit</a>
+        </div>
+
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <a href="#" class="btn btn-next">Next</a>
+        </div>
+        <br>
+        <iframe id="programSemesterIframe" src="/admin/progSemTable" width="100%" height="300px"></iframe>
+      </div>
+      <div class="form-step">
+        <div class="input-group">
+          <label for="department">ProgramSemester</label>
+          <select id="progSemDropdown"></select>
+        </div>
+        <div class="input-group">
+          <label for="course">Course</label>
+          <input type="text" name="course" id="course" />
+        </div>
+
+        <div class="btns-group btns-group-margin">
+            <a href="#" id="courseSubmit" class="red-btn submit">Submit</a>
+        </div>
+
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <a href="#" class="btn btn-next">Next</a>
+        </div>
+        <br>
+        <iframe id="courseIframe" src="/admin/courseTable" width="100%" height="300px"></iframe>
+      </div>
+
+      <div class="form-step">
+        <div class="input-group">
+          <label for="link">Link</label>
+          <input type="text" name="link" id="link" />
+        </div>
+
+        <div class="input-group">
+          <label for="firstCourse">First Course</label>
+          <input type="text" name="firstCourse" id="firstCourse" />
+        </div>
+
+        <div class="input-group">
+          <label for="secondCourse">Second Course</label>
+          <input type="text" name="secondCourse" id="secondCourse" />
+        </div>
+
+        <div class="input-group">
+          <label for="thirdCourse">Third Course</label>
+          <input type="text" name="thirdCourse" id="thirdCourse" />
+        </div>
+        
+      
+        <div class="btns-group">
+            <a href="#" id="linkSubmit" class="red-btn submit">Submit</a>
+        </div>
+        <br>
+      
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <a href="#" class="btn btn-next">Next</a>
+        </div>
+        <br>
+        <iframe id="linkIframe" src="/admin/linkTable" width="100%" height="300px"></iframe>
+      </div>
+
+        <div class="form-step">
+            <div class="input-group">
+              <label for="date">ExamSchedule</label>
+              <input type="date" name="date" id="date" />
+            </div>
+
+            <div class="btns-group btns-group-margin">
+                <a href="#" id="dateSubmit" class="red-btn submit">Submit</a>
+            </div>
+
+            <div class="btns-group">
+              <a href="#" class="btn btn-prev">Previous</a>
+              <a href="#" class="btn btn-next" onclick="check()">Next</a>
+              <!--<a href="#" class="btn btn-next">Next</a>-->
+            </div>
+            <br>
+            <iframe id="dateIframe" src="/admin/examScheduleTable" width="100%" height="300px"></iframe>
+        </div>
+
+        <div class="form-step">
+          
+            <!-- add some text that matches with the design -->
+            <h1 class="text-center" id="CRPreference"></h1>
+            <div class="btns-group">
+              <a href="#" class="btn btn-prev">Previous</a>
+              <a href="#" class="btn btn-next" id="finalButton">Next</a>
+              <!--<a href="#" class="btn btn-next">Next</a>-->
+            </div>
+        </div>
+         
+        </div>
+
+        <div class="form-step">
+            
+            <div class="btns-group btns-group-margin">
+              <a href="#" id="Generate" class="big-btn submit">Generate Routine</a>
+              <a href="/fetch-routine" id="Fetch" class="big-btn submit">Fetch Routine</a>
+              <!--<a href="#" class="btn btn-next">Next</a>-->
+            </div>
+            <div class="btns-group">
+                <a href="#" class="btn btn-prev">Previous</a>
+                <!--<a href="#" class="btn btn-next">Next</a>-->
+            </div>
+        </div>
+      </div>
+    </form>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      
+
+      const prevBtns = document.querySelectorAll(".btn-prev");
+      const nextBtns = document.querySelectorAll(".btn-next");
+      const progress = document.getElementById("progress");
+      const formSteps = document.querySelectorAll(".form-step");
+      const progressSteps = document.querySelectorAll(".progress-step");
+
+      let formStepsNum = 0;
+
+      nextBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          formStepsNum++;
+          updateFormSteps();
+          updateProgressbar();
+        });
+      });
+
+      prevBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          formStepsNum--;
+          updateFormSteps();
+          updateProgressbar();
+        });
+      });
+
+      function updateFormSteps() {
+        formSteps.forEach((formStep) => {
+          formStep.classList.contains("form-step-active") &&
+            formStep.classList.remove("form-step-active");
+        });
+
+        formSteps[formStepsNum].classList.add("form-step-active");
+      }
+
+      function updateProgressbar() {
+        progressSteps.forEach((progressStep, idx) => {
+          if (idx < formStepsNum + 1) {
+            progressStep.classList.add("progress-step-active");
+          } else {
+            progressStep.classList.remove("progress-step-active");
+          }
+        });
+
+        const progressActive = document.querySelectorAll(".progress-step-active");
+
+        progress.style.width =
+          ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
+      }
+
+
+
+
+
+
+      // ///////////////////////////// submit buttons /////////////////////////////
+      document.getElementById("departmentSubmit").addEventListener("click", function() {
+        event.preventDefault();
+
+        fetch('/admin/adddepartment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            department: document.getElementById("department").value
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          document.getElementById("departmentIframe").src = "/admin/deptTable";
+          Swal.fire({
+            title: 'Success',
+            text: document.getElementById("department").value + ' Department Added Successfully',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+          // alert(document.getElementById("department").value + 'Department Added Successfully');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+
+      document.getElementById("programSemesterSubmit").addEventListener("click", function(){
+        event.preventDefault();
+        var selectElement = document.getElementById("departmentDropdown");
+        fetch('/admin/addprogramsemester', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            department: selectElement.options[selectElement.selectedIndex].text,
+            programsemester: document.getElementById("programsemester").value
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          document.getElementById("programSemesterIframe").src = "/admin/progSemTable";
+          Swal.fire({
+            title: 'Success',
+            text: document.getElementById("programsemester").value + ' ProgramSemester Added Successfully',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+          // alert(document.getElementById("department").value + 'Department Added Successfully');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+
+      document.getElementById("courseSubmit").addEventListener("click", function(){
+        event.preventDefault();
+        var selectElement = document.getElementById("progSemDropdown");
+        fetch('/admin/addcourse', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            programsemester: selectElement.options[selectElement.selectedIndex].text,
+            course: document.getElementById("course").value
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          document.getElementById("courseIframe").src = "/admin/courseTable";
+          Swal.fire({
+            title: 'Success',
+            text: document.getElementById("course").value + ' Course Added Successfully',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+          // alert(document.getElementById("department").value + 'Department Added Successfully');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+
+      document.getElementById("linkSubmit").addEventListener("click", function(){
+        event.preventDefault();
+        fetch('/admin/addlink', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            linkname: document.getElementById("link").value,
+            course1: document.getElementById("firstCourse").value,
+            course2: document.getElementById("secondCourse").value,
+            course3: document.getElementById("thirdCourse").value
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          document.getElementById("linkIframe").src = "/admin/linkTable";
+          Swal.fire({
+            title: 'Success',
+            text: document.getElementById("link").value + ' Link Added Successfully',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+          // alert(document.getElementById("department").value + 'Department Added Successfully');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+
+      document.getElementById("dateSubmit").addEventListener("click", function(){
+        event.preventDefault();
+        // console.log(document.getElementById("date").value);
+        const d = document.getElementById("date").value;
+        // parse the d varibale and seperate year, month and day. the given format is yyyy-mm-dd
+        const year = d.substring(0, 4);
+        const month = d.substring(5, 7);
+        const day = d.substring(8, 10);
+        const newD = day + "/" + month + "/" + year;
+        // console.log(newD);
+        fetch('/admin/addexamschedule', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            examdate: newD
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          document.getElementById("dateIframe").src = "/admin/examScheduleTable";
+          Swal.fire({
+            title: 'Success',
+            text: document.getElementById("date").value + ' ExamSchedule Added Successfully',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+          // alert(document.getElementById("department").value + 'Department Added Successfully');
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // var elems = document.querySelectorAll('.modal');
+        // var instances = M.Modal.init(elems);
+        document.getElementById("department").value = "";
+        document.getElementById("programsemester").value = "";
+        document.getElementById("course").value = "";
+        document.getElementById("linkname").value = "";
+        document.getElementById("date").value = "";
+      });
+
+      window.onload = function() {
+        fetch('/admin/getDepartments', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const departmentSelect = document.getElementById('departmentDropdown');
+            for(let i = 0; i < data.length; i++) {
+                const option = document.createElement('option');
+                option.value = data[i].deptId;
+                option.text = data[i].deptName;
+                departmentSelect.appendChild(option);
+            }
+            console.log('Success:', data);
+        })
+        .catch(error => console.error('Error:', error));
+
+        fetch('/admin/getProgramSemester', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          const programSemesterSelect = document.getElementById('progSemDropdown');
+          for(let i = 0; i < data.length; i++) {
+            const option = document.createElement('option');
+            option.value = data[i].progSemId;
+            option.text = data[i].progSemName;
+            programSemesterSelect.appendChild(option);
+          }
+          console.log('Success:', data);
+        })
+        .catch(error => console.error('Error:', error));
+
+        
+      };
+
+      function check(){
+        fetch('https://localhost:7227/api/Student/GetCheckPreferences', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          // console.log('Success:', data);
+          if(data){
+            document.getElementById('CRPreference').innerHTML = "All CR Preference submitted";
+            document.getElementById('finalButton').style.display = "block";
+          }
+          else{
+            document.getElementById('CRPreference').innerHTML = "CR Preference Not submitted";
+            document.getElementById('finalButton').style.display = "none";
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      }
+
+      document.getElementById('Generate').addEventListener('click', function(){
+        fetch('/generate-routine', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          Swal.fire({
+            title: 'Success',
+            text: 'Routine Generated Successfully',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          });
+        })
+        .catch(error => console.error('Error:', error));
+      });
+
+
+    </script>
+  </body>
+</html>

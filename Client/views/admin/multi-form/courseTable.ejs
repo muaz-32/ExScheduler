@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Materialize CSS Example</title>
+</head>
+<body>
+
+<div class="container">
+    <table class="highlight">
+        <thead>
+            <tr>
+                <!-- <th>ID</th> -->
+                <th>Name</th>
+                <th>ProgramSemester</th>
+                <!-- <th>Edit/Delete</th> -->
+            </tr>
+        </thead>
+        <tbody id="departmentsTableBody">
+            <!-- Table rows will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Structure -->
+<div id="optionsModal" class="modal">
+    <div class="modal-content center-align">
+        <!-- <a href="#!" class="modal-close btn-flat" onclick="editRow()" onmouseover="hoverButtonEdit(this)" onmouseout="unhoverButton(this)">Edit</a> -->
+        <a href="#!" class="modal-close btn-flat" onclick="deleteRow()" onmouseover="hoverButtonDelete(this)" onmouseout="unhoverButton(this)">Delete</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    function hoverButtonEdit(button) {
+        button.style.backgroundColor = '#ffc107'; // Change to your desired color
+    }
+
+    function hoverButtonDelete(button) {
+        button.style.backgroundColor = '#d32f2f'; // Change to your desired color
+    }
+
+    function unhoverButton(button) {
+        button.style.backgroundColor = ''; // Reset to default color
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize modal
+        var optionsModal = document.getElementById('optionsModal');
+        M.Modal.init(optionsModal);
+
+        // Fetch departments from the server
+        fetch('/admin/getCourse', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            }
+        }) // Replace with your actual endpoint
+        .then(response => response.json())
+        .then(data => {
+            // Call a function to render the data in the table
+            console.log('Success:', data);
+            renderProgramSemester(data);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    function showOptions(id, name) {
+        // Set data for the selected row
+        document.getElementById('optionsModal').dataset.rowId = id;
+        document.getElementById('optionsModal').dataset.rowName = name;
+
+        // Open the modal
+        M.Modal.getInstance(optionsModal).open();
+    }
+
+    function editRow() {
+        // Get data from the selected row
+        var id = document.getElementById('optionsModal').dataset.rowId;
+        var name = document.getElementById('optionsModal').dataset.rowName;
+
+        // Implement edit functionality here using the id and name
+        console.log("Edit clicked for ID:", id, "Name:", name);
+
+        // Close the modal
+        M.Modal.getInstance(optionsModal).close();
+    }
+
+    function deleteRow() {
+        // Get data from the selected row
+        var id = document.getElementById('optionsModal').dataset.rowId;
+        var name = document.getElementById('optionsModal').dataset.rowName;
+
+        // Implement delete functionality here using the id and name
+        fetch('/admin/deleteCourse', {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                courseId: id
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            window.location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+        console.log("Delete clicked for ID:", id, "Name:", name);
+
+        // Close the modal
+        M.Modal.getInstance(optionsModal).close();
+    }
+
+    function renderProgramSemester(departments) {
+        const tbody = document.getElementById('departmentsTableBody');
+
+        for (let i = 0; i < departments.length; i++) {
+            const row = document.createElement('tr');
+            row.className = 'row-click';
+            row.onclick = () => showOptions(departments[i].courseId, departments[i].courseName);
+
+            const idCell = document.createElement('td');
+            idCell.textContent = departments[i].courseId;
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = departments[i].courseName;
+
+            const departmentCell = document.createElement('td');
+            departmentCell.textContent = departments[i].progSemName;
+
+            const optionsCell = document.createElement('td');
+            optionsCell.innerHTML = `<a href="#!" class="btn-flat" onclick="showOptions(${departments[i].deptId}, '${departments[i].deptName}')">Edit/Delete</a>`;
+
+            // row.appendChild(idCell);
+            row.appendChild(nameCell);
+            row.appendChild(departmentCell);
+            // row.appendChild(optionsCell);
+
+            tbody.appendChild(row);
+        }
+    }
+</script>
+
+</body>
+</html>

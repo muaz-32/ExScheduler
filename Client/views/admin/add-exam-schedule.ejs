@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Add Department</title>
+  <%-include('../partials/header') %>
+</head>
+
+<body>
+  <!-- Include the sidebar partial -->
+  <%-include('../partials/nav-sidenav') %>
+    <!-- CONTENT -->
+
+    <!-- NAVBAR -->
+    <nav>
+
+    </nav>
+    <!-- NAVBAR -->
+
+    <!-- MAIN -->
+    <main>
+      <div class="head-title">
+        <div class="left">
+          <h1>Add Exam Schedule(Dates)</h1>
+        </div>
+      </div>
+    </main>
+    <!-- MAIN -->
+    <form action="/admin/addexamschedule" method="post">
+      <section id="content">
+
+        <div class="container">
+          <div class="input-container">
+            <label for="date">Date:</label>
+            <input type="date" id="examdate" name="examdate" style="width: auto;"><br><br>
+            <button type="submit" id="LinkButton">Submit</button>
+          </div>
+        </div>
+      </section>
+    </form>
+
+
+</body>
+
+</html>
